@@ -1,6 +1,0 @@
-[submodule "parsing/get_next_line"]
-	path = parsing/get_next_line
-	url = git@github.com:Osm01/GetNextLine.git
-[submodule "parsing/libft"]
-	path = parsing/libft
-	url = git@github.com:Osm01/libft.git
