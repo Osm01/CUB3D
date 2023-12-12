@@ -6,7 +6,7 @@
 /*   By: ouidriss <ouidriss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:51:37 by ouidriss          #+#    #+#             */
-/*   Updated: 2023/12/06 16:44:08 by ouidriss         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:26:05 by ouidriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_elements
 	struct s_elements	*next;
 }				t_elements;
 
-extern t_elements	*g_elements;
 
 // ------- CHECK EXTENSION ------- //
 int			check_extension(const char *argv);

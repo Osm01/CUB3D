@@ -6,7 +6,7 @@
 /*   By: ouidriss <ouidriss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:51:37 by ouidriss          #+#    #+#             */
-/*   Updated: 2023/12/11 15:21:39 by ouidriss         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:46:33 by ouidriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	found_space_or_tabs(const char *elem, int start)
 	return (i);
 }
 
-int	set_struct_elements(const char **elem)
+int	set_struct_elements(const char **elem, t_elements **t_elem)
 {
 	char	*key;
 	char	*value;
@@ -130,15 +130,15 @@ int	set_struct_elements(const char **elem)
 			}
 			y ++;
 		}
-		add_back_element(&g_elements, add_new_element(key, value));
+		add_back_element(t_elem, add_new_element(key, value));
 		i ++;
 	}
 	return (1);
 }
 
-int	check_dup_key(struct s_elements *head)
+int	check_dup_key(t_elements *head)
 {
-	struct s_elements	*tmp;
+	t_elements	*tmp;
 
 	tmp = head;
 	head = head->next;
@@ -151,36 +151,87 @@ int	check_dup_key(struct s_elements *head)
 	return (1);
 }
 
-int	check_valid_elements(const char **elem)
+int	check_valid_value(t_elements *elem)
 {
-	if (!set_struct_elements(elem))
-		return (0);
-	while (g_elements)
+	int		i;
+	int 	y;
+	char	**rgb;
+
+	while (elem)
 	{
-		if (ft_strcmp(g_elements->key, "NO") || ft_strcmp(g_elements->key, "SO") \
-		|| ft_strcmp(g_elements->key, "WE") || ft_strcmp(g_elements->key, "EA") \
-		|| ft_strcmp(g_elements->key, "F") || ft_strcmp(g_elements->key, "C"))
+		if (ft_strlen(elem->key) == 1)
 		{
-			if (!check_dup_key(g_elements))
+			i = 0;
+			rgb = ft_split(elem->value, ',');
+			while (rgb[i])
+				i ++;
+			if (i == 3)
+			{
+				i = 0;
+				while (rgb[i])
+				{
+					y = 0;
+					while (rgb[i][y])
+					{
+						if (rgb[i][y] < '0' || rgb[i][y] > '9')
+							return (0);
+						y ++;
+					}
+					i ++;
+				}
+				i = 0;
+				while (i < 3)
+				{
+					if (ft_atoi(rgb[i]) > 255 || ft_atoi(rgb[i]) < 0)
+						return (0);
+					i ++;
+				}
+			}
+			else
+				return (0);
+		}
+		elem = elem->next;
+	}
+	return (1);
+}
+
+int	check_valid_elements(const char **elem, t_elements **t_elem)
+{
+	t_elements	*tmp;
+
+	if (!set_struct_elements(elem, t_elem))
+		return (0);
+	tmp = *t_elem;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, "NO") || ft_strcmp(tmp->key, "SO") \
+		|| ft_strcmp(tmp->key, "WE") || ft_strcmp(tmp->key, "EA") \
+		|| ft_strcmp(tmp->key, "F") || ft_strcmp(tmp->key, "C"))
+		{
+			if (!check_dup_key(tmp))
 				return (0);
 		}
 		else
 			return (0);
-		g_elements = g_elements->next;
+		tmp = tmp->next;
 	}
+	if (!check_valid_value(*t_elem))
+		return (0);
 	return (1);
 }
 
 int	main(int argc, const char *argv[])
 {
 	const char	**map;
+	t_elements	*t_elem;
 
+	t_elem = NULL;
 	if (argc == 2)
 	{
 		if (!check_extension(argv[1]))
 			return (0);
 		map = read_elements(argv[1]);
-		if (check_valid_elements(map))
+		if (check_valid_elements(map, &t_elem))
 		{
 			printf(GREEN"VALID\n"RESET);
 		}
