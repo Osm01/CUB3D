@@ -68,7 +68,7 @@ int	set_struct_elements(const char **elem, t_elements **t_elem)
 	char	*key;
 	char	*value;
 	int		i;
-	int		y;
+	size_t 	y;
 
 	if (!valid_two_elements(elem))
 		return (0);

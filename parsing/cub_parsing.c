@@ -6,7 +6,7 @@
 /*   By: ouidriss <ouidriss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:51:37 by ouidriss          #+#    #+#             */
-/*   Updated: 2023/12/12 11:27:05 by ouidriss         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:16:39 by ouidriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,20 @@ const char	**read_elements(const char *file_name)
 int	main(int argc, const char *argv[])
 {
 	char		**map;
-	t_elements	*t_elem;
+	t_map		map_struct;
 
 	t_elem = NULL;
 	if (argc == 2)
 	{
 		if (!check_extension(argv[1]))
 			return (printf(RED"Error\n"RESET), 0);
-		if (check_valid_map(argv[1]))
-			printf(GREEN"VALID\n"RESET);
+		map = read_map(argv[1]);
+		if (check_valid_map(map))
+		{
+			map_struct = malloc(sizeof (t_map));
+			map_struct.map = map;
+			map_struct.player = player_dir(map);
+		}
 		else
 			printf(RED"NOT VALID"RESET);
 	}

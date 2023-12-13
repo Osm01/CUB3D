@@ -35,6 +35,12 @@ typedef struct s_elements
 	struct s_elements	*next;
 }				t_elements;
 
+typedef struct	s_map
+{
+	char	**map;
+	char	player;
+}				t_map;
+
 
 // ------- CHECK EXTENSION ------- //
 int			check_extension(const char *argv);
@@ -51,7 +57,8 @@ int			set_struct_elements(const char **elem, t_elements **t_elem);
 int			check_valid_elements(const char **elem, t_elements **t_elem);
 // ------- MANAGEMENT OF MAP ------- //
 char		**read_map(const char *file_name);
-int			check_valid_map(char const *filename);
+int			check_valid_map(char **map);
+char		player_dir(char **map);
 
 int			ft_strcmp(const char *s1, const char *s2);
 

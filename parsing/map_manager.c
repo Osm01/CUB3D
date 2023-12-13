@@ -6,11 +6,30 @@
 /*   By: ouidriss <ouidriss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:10:40 by ouidriss          #+#    #+#             */
-/*   Updated: 2023/12/12 14:16:19 by ouidriss         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:13:37 by ouidriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_parsing.h"
+
+char	player_dir(char **map)
+{
+	int	i;
+	int	y;
+
+	i = -1;
+	while (map[++i])
+	{
+		y = -1;
+		while (map[i][++y])
+		{
+			if (map[i][y] == 'N' || map[i][y] == 'S' \
+			|| map[i][y] == 'E' || map[i][y] == 'W')
+				return (map[i][y]);
+		}
+	}
+	return ('0');
+}
 
 int	count_line_of_map(const char *file_name)
 {
@@ -27,10 +46,10 @@ int	count_line_of_map(const char *file_name)
 		readline = get_next_line(fd);
 		if (!readline)
 			break ;
-		if (i >= 6 && !ft_strcmp(readline, "\n") && !count)
-			count = 1;
-		else if (count > 0)
+		if (i >= 6 && !ft_strcmp(readline, "\n"))
 			count ++;
+		if (count && ft_strcmp(readline, "\n"))
+			return (close(fd), -1);
 		if (!ft_strcmp(readline, "\n"))
 			i ++;
 		free(readline);
