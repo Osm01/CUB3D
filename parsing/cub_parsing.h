@@ -58,7 +58,10 @@ int			check_valid_elements(const char **elem, t_elements **t_elem);
 // ------- MANAGEMENT OF MAP ------- //
 char		**read_map(const char *file_name);
 int			check_valid_map(char **map);
+int			check_element_of_map(char **map);
 char		player_dir(char **map);
+int			index_first_element_of_map(char *line);
+int			count_map(char **map);
 
 int			ft_strcmp(const char *s1, const char *s2);
 

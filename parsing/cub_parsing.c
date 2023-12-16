@@ -43,19 +43,25 @@ const char	**read_elements(const char *file_name)
 int	main(int argc, const char *argv[])
 {
 	char		**map;
-	t_map		map_struct;
+	const char	**elements;
+	t_map		*map_struct;
+	t_elements	*elements_struct;
 
-	t_elem = NULL;
+	map_struct = NULL;
 	if (argc == 2)
 	{
 		if (!check_extension(argv[1]))
 			return (printf(RED"Error\n"RESET), 0);
 		map = read_map(argv[1]);
-		if (check_valid_map(map))
+		elements = read_elements(argv[1]);
+		elements_struct = NULL;
+		if (check_valid_elements(elements, &elements_struct) \
+		&& check_valid_map(map))
 		{
-			map_struct = malloc(sizeof (t_map));
-			map_struct.map = map;
-			map_struct.player = player_dir(map);
+			printf(GREEN"VALID\n"RESET);
+//			map_struct = (t_map *) malloc(sizeof (t_map));
+//			map_struct->player = player_dir(map);
+//			map_struct->map = map;
 		}
 		else
 			printf(RED"NOT VALID"RESET);
