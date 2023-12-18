@@ -12,7 +12,7 @@
 
 #include "cub_parsing.h"
 
-int	valid_two_elements(const char **elem)
+int	valid_two_elements(char **elem)
 {
 	int	i;
 	int	y;
@@ -39,7 +39,6 @@ int	valid_two_elements(const char **elem)
 	}
 	return (1);
 }
-
 
 int	check_dup_key(t_elements *head)
 {
@@ -98,7 +97,8 @@ int	check_valid_value(t_elements *elem)
 			if (i == 3)
 			{
 				if (!check_valid_value_addictional(rgb, i))
-					return (0);
+					return (freeing_double_pointer(rgb), 0);
+				freeing_double_pointer(rgb);
 			}
 			else
 				return (0);
@@ -108,7 +108,7 @@ int	check_valid_value(t_elements *elem)
 	return (1);
 }
 
-int	check_valid_elements(const char **elem, t_elements **t_elem)
+int	check_valid_elements(char **elem, t_elements **t_elem)
 {
 	t_elements	*tmp;
 

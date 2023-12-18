@@ -16,6 +16,14 @@ t_elements	*add_new_element(char *key, char *value)
 {
 	t_elements	*new_node;
 
+	if (!key || !value)
+	{
+		if (key)
+			free(key);
+		else if (value)
+			free(value);
+		return (NULL);
+	}
 	new_node = (t_elements *)malloc(sizeof (t_elements));
 	if (!new_node)
 		return (NULL);
@@ -33,7 +41,7 @@ t_elements	*last_element(t_elements *head)
 			return (head);
 		head = head->next;
 	}
-	return (NULL);
+	return (head);
 }
 
 void	add_back_element(t_elements **head, t_elements *new)
@@ -42,6 +50,7 @@ void	add_back_element(t_elements **head, t_elements *new)
 
 	if (!new)
 		return ;
+	new->next = NULL;
 	if (head && *head)
 	{
 		tmp = last_element(*head);
@@ -50,4 +59,3 @@ void	add_back_element(t_elements **head, t_elements *new)
 	else
 		*head = new;
 }
-

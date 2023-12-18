@@ -35,8 +35,8 @@ int	check_element_0(char **map, int x_index, int y_index)
 	y = y_index;
 	if (!i || (i == count_map(map) - 1))
 		return (0);
-	if (y > ft_strlen(map[i - 1]) - 2 || \
-				y > ft_strlen(map[i + 1]) - check_new_line(map[i + 1]) - 1)
+	if (y > (int)ft_strlen(map[i - 1]) - 2 || \
+	y > ((int)ft_strlen(map[i + 1]) - check_new_line(map[i + 1]) - 1))
 		return (0);
 	if (map[i][y + 1] == ' ' || map[i][y - 1] == ' ' \
 				|| map[i + 1][y] == ' ' || map[i - 1][y] == ' ')
@@ -63,10 +63,7 @@ int	check_valid_map(char **map)
 				return (0);
 		}
 		if (map[i][index_first_element_of_map(map[i])] != '1')
-		{
-			printf("first index on %d\n", i);
 			return (0);
-		}
 		if (map[i][ft_strlen(map[i]) - 2] != '1')
 			return (0);
 	}

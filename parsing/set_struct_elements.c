@@ -12,7 +12,7 @@
 
 #include "cub_parsing.h"
 
-int	skip_space_and_tabs(const char *elem, int start)
+int	skip_space_and_tabs(char *elem, int start)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int	skip_space_and_tabs(const char *elem, int start)
 	return (i);
 }
 
-int	found_space_or_tabs(const char *elem, int start)
+int	found_space_or_tabs(char *elem, int start)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ int	found_space_or_tabs(const char *elem, int start)
 	return (i);
 }
 
-int	set_key_and_value(const char *elem, int y, char **key, char **value)
+int	set_key_and_value(char *elem, int y, char **key, char **value)
 {
 	int	end;
 
@@ -63,18 +63,20 @@ int	set_key_and_value(const char *elem, int y, char **key, char **value)
 	return (y);
 }
 
-int	set_struct_elements(const char **elem, t_elements **t_elem)
+int	set_struct_elements(char **elem, t_elements **t_elem)
 {
 	char	*key;
 	char	*value;
 	int		i;
-	size_t 	y;
+	size_t	y;
 
 	if (!valid_two_elements(elem))
 		return (0);
 	i = 0;
 	while (elem[i])
 	{
+		key = NULL;
+		value = NULL;
 		y = 0;
 		while (y < ft_strlen(elem[i]))
 		{

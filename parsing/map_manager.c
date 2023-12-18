@@ -6,7 +6,7 @@
 /*   By: ouidriss <ouidriss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:10:40 by ouidriss          #+#    #+#             */
-/*   Updated: 2023/12/13 18:13:37 by ouidriss         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:11:49 by ouidriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int	count_line_of_map(const char *file_name)
 		if (i >= 6 && !ft_strcmp(readline, "\n"))
 			count ++;
 		if (count && ft_strcmp(readline, "\n"))
-			return (close(fd), -1);
+			return (close(fd), free(readline), -1);
 		if (!ft_strcmp(readline, "\n"))
 			i ++;
 		free(readline);
 	}
 	if (i < 6 || fd < 0)
-		return (-1);
+		count = -1;
 	return (close(fd), count);
 }
 
@@ -80,6 +80,8 @@ void	set_map(char **map, int fd, int count)
 				map[i ++] = readline;
 			else if (i)
 				map[i ++] = readline;
+			else
+				free(readline);
 		}
 		y ++;
 	}

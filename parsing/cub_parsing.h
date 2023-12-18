@@ -35,12 +35,17 @@ typedef struct s_elements
 	struct s_elements	*next;
 }				t_elements;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	**map;
 	char	player;
 }				t_map;
 
+typedef struct s_garbage
+{
+	char				*ptr;
+	struct s_garbage	*next;
+}								t_garbage;
 
 // ------- CHECK EXTENSION ------- //
 int			check_extension(const char *argv);
@@ -51,10 +56,10 @@ t_elements	*add_new_element(char *key, char *value);
 t_elements	*last_element(t_elements *head);
 void		add_back_element(t_elements **head, t_elements *new);
 // ------- MANAGEMENT OF ELEMENTS ------- //
-const char	**read_elements(const char *file_name);
-int			valid_two_elements(const char **elem);
-int			set_struct_elements(const char **elem, t_elements **t_elem);
-int			check_valid_elements(const char **elem, t_elements **t_elem);
+char		**read_elements(const char *file_name);
+int			valid_two_elements(char **elem);
+int			set_struct_elements(char **elem, t_elements **t_elem);
+int			check_valid_elements(char **elem, t_elements **t_elem);
 // ------- MANAGEMENT OF MAP ------- //
 char		**read_map(const char *file_name);
 int			check_valid_map(char **map);
@@ -62,6 +67,11 @@ int			check_element_of_map(char **map);
 char		player_dir(char **map);
 int			index_first_element_of_map(char *line);
 int			count_map(char **map);
+// ------- MANAGEMENT OF LEAKS ------- //
+t_garbage	*add_new_gar(char *ptr);
+t_garbage	*last_node_gar(t_garbage *garbage);
+void		add_back_gar(t_garbage **head, t_garbage *new);
+void		freeing_double_pointer(char **ptr);
 
 int			ft_strcmp(const char *s1, const char *s2);
 
