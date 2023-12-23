@@ -72,6 +72,7 @@ t_garbage	*add_new_gar(char *ptr);
 t_garbage	*last_node_gar(t_garbage *garbage);
 void		add_back_gar(t_garbage **head, t_garbage *new);
 void		freeing_double_pointer(char **ptr);
+void		set_struct_parsing_map(t_map **map_struct, char **map);
 
 int			ft_strcmp(const char *s1, const char *s2);
 
