@@ -1,7 +1,7 @@
 NAME = raycasting
 
 CXX = cc
-CXXFLAGS = #-Wall -Wextra -Werror #-fsanitize=address
+CXXFLAGS = -fsanitize=address #-Wall -Wextra -Werror -fsanitize=address
 COMPI =  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 SRC_RAYCASTING = raycasting.c

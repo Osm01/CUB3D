@@ -21,7 +21,7 @@
 # define CYAN "\033[36m"
 # define RESET "\033[0m"
 # define WIDTH 600
-# define HEIGHT 400
+# define HEIGHT 600
 
 # include <mlx.h>
 # include <math.h>
