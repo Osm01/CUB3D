@@ -9,7 +9,7 @@ CFILES = cub_parsing.c ft_strcmp.c get_next_line/get_next_line.c \
 
 all : $(NAME)
 
-$(NAME) : $(CFILES) LIBFT
+$(NAME) : $(CFILES) $(LIBFT)
 	$(CXX) $(CXXFLAGS) $(CFILES) ./libft/libft.a  -o $(NAME)
 
 LIBFT :

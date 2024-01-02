@@ -12,7 +12,7 @@ SRC_PARSING = ../parsing/cub_parsing.c ../parsing/ft_strcmp.c ../parsing/get_nex
 
 all : $(NAME)
 
-$(NAME) : $(SRC_RAYCASTING) LIBFT
+$(NAME) : $(SRC_RAYCASTING) $(LIBFT)
 	$(CXX) $(CXXFLAGS) $(SRC_RAYCASTING) $(SRC_PARSING) ../parsing/libft/libft.a $(COMPI) -o $(NAME)
 
 LIBFT :

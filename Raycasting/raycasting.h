@@ -56,10 +56,10 @@ typedef struct s_player
 {
 	double 		x_player;
 	double 		y_player;
-	int 	speed;
-	double	current_angle;
-	t_vars	*vars;
-	t_map	*map;
+	int 		speed;
+	double		current_angle;
+	t_vars		*vars;
+	t_map		*map;
 }				t_player;
 
 typedef struct s_vector

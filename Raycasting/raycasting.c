@@ -80,9 +80,13 @@ void dda(t_vector start, t_vector end, t_player *player)
 	}
 }
 
-int	find_hypotenuse(int a, int b)
-{
-	return (sqrt(a) + sqrt(b));
+//int	find_hypotenuse(int a, int b)
+//{
+//	return (sqrt(a) + sqrt(b));
+//}
+
+double find_hypotenuse(double x, double y) {
+	return sqrt(x * x + y * y);
 }
 
 //void	dda(t_vector start, t_vector end, t_player *player)
@@ -114,91 +118,105 @@ int	draw_ray(t_player *player)
 	t_vector	x_intersection;
 	int			y_end_map = 0;
 	int			x_end_map = 0;
+	double		ray_angle;
 	int			count_rows = count_map(player->map->map);
 	int			y_map = player->y_player / (HEIGHT / count_rows);
 	int 		x_map = (player->x_player * ((int)ft_strlen(player->map->map[y_map]) - 1)) / WIDTH;
 
-	if (player->current_angle == 360 || player->current_angle == -360)
-		player->current_angle = 0;
+	if (player->current_angle >= 360 || player->current_angle <= -360)
+		player->current_angle = (int)player->current_angle % 360;
 	start.x_position = player->x_player;
 	start.y_position = player->y_player;
 	y_end_map = y_map;
 	x_end_map = x_map;
-	while (player->map->map[y_end_map][x_end_map] != '1')
+	int y_m = y_map;
+	int x_m = x_map;
+	ray_angle = player->current_angle - 30;
+	while (ray_angle <= (player->current_angle + 30))
 	{
-		if ((player->current_angle >= -180 && player->current_angle < 0) || player->current_angle >= 180)
+		start.x_position = player->x_player;
+		start.y_position = player->y_player;
+		y_end_map = y_m;
+		x_end_map = x_m;
+		y_map = y_m;
+		x_map = x_m;
+		while (player->map->map[y_end_map][x_end_map] != '1')
 		{
-			y_intersection.y_position = (y_map) * (HEIGHT / count_rows);
-			y_intersection.x_position = start.x_position + ((abs(y_intersection.y_position - start.y_position)) / (tan(convert_to_radians(player->current_angle))));
-			if ((player->current_angle >= -90 && player->current_angle <= 0) || (player->current_angle >= (180 + 90) && player->current_angle >= 0))
+			if ((ray_angle >= -180 && ray_angle < 0) || ray_angle >= 180)
 			{
-				x_intersection.x_position = (x_map) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
-				x_intersection.y_position = start.y_position + (tan(convert_to_radians(player->current_angle)) * (abs(x_intersection.x_position - start.x_position)));
-			}
-			else
-			{
-				x_intersection.x_position = (x_map + 1) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
-				x_intersection.y_position = start.y_position - (tan(convert_to_radians(player->current_angle)) * (abs(x_intersection.x_position - start.x_position)));
-			}
-			if (find_hypotenuse(abs(x_intersection.x_position - start.x_position), abs(x_intersection.y_position - start.y_position))\
+				y_intersection.y_position = (y_map) * (HEIGHT / count_rows);
+				y_intersection.x_position = start.x_position + ((abs(y_intersection.y_position - start.y_position)) / (tan(convert_to_radians(ray_angle))));
+				if ((ray_angle >= -90 && ray_angle <= 0) || (ray_angle >= (180 + 90) && ray_angle >= 0))
+				{
+					x_intersection.x_position = (x_map) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
+					x_intersection.y_position = start.y_position + (tan(convert_to_radians(ray_angle)) * (abs(x_intersection.x_position - start.x_position)));
+				}
+				else
+				{
+					x_intersection.x_position = (x_map + 1) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
+					x_intersection.y_position = start.y_position - (tan(convert_to_radians(ray_angle)) * (abs(x_intersection.x_position - start.x_position)));
+				}
+				if (find_hypotenuse(abs(x_intersection.x_position - start.x_position), abs(x_intersection.y_position - start.y_position))\
 		< find_hypotenuse(abs(y_intersection.x_position - start.x_position), abs(y_intersection.y_position - start.y_position)))
-			{
-				end.x_position = x_intersection.x_position;
-				end.y_position = x_intersection.y_position;
+				{
+					end.x_position = x_intersection.x_position;
+					end.y_position = x_intersection.y_position;
+				}
+				else
+				{
+					end.x_position = y_intersection.x_position;
+					end.y_position = y_intersection.y_position;
+				}
 			}
 			else
 			{
-				end.x_position = y_intersection.x_position;
-				end.y_position = y_intersection.y_position;
-			}
-		}
-		else
-		{
-			y_intersection.y_position = (y_map + 1) * (HEIGHT / count_rows);
-			y_intersection.x_position = start.x_position - ((abs(y_intersection.y_position - start.y_position)) / (tan(convert_to_radians(player->current_angle))));
-			if ((player->current_angle < -(90 + 180) && player->current_angle <= 0) || (player->current_angle <= 90 && player->current_angle >= 0))
-			{
-				x_intersection.x_position = (x_map) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
-				x_intersection.y_position = start.y_position + (tan(convert_to_radians(player->current_angle)) * (abs(x_intersection.x_position - start.x_position)));
-			}
-			else
-			{
-				x_intersection.x_position = (x_map + 1) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
-				x_intersection.y_position = start.y_position - (tan(convert_to_radians(player->current_angle)) * (abs(x_intersection.x_position - start.x_position)));
-			}
-			if (find_hypotenuse(abs(x_intersection.x_position - start.x_position), abs(x_intersection.y_position - start.y_position))\
+				y_intersection.y_position = (y_map + 1) * (HEIGHT / count_rows);
+				y_intersection.x_position = start.x_position - ((abs(y_intersection.y_position - start.y_position)) / (tan(convert_to_radians(ray_angle))));
+				if ((ray_angle < -(90 + 180) && ray_angle <= 0) || (ray_angle <= 90 && ray_angle >= 0))
+				{
+					x_intersection.x_position = (x_map) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
+					x_intersection.y_position = start.y_position + (tan(convert_to_radians(ray_angle)) * (abs(x_intersection.x_position - start.x_position)));
+				}
+				else
+				{
+					x_intersection.x_position = (x_map + 1) * (WIDTH / (ft_strlen(player->map->map[y_map]) - 1));
+					x_intersection.y_position = start.y_position - (tan(convert_to_radians(ray_angle)) * (abs(x_intersection.x_position - start.x_position)));
+				}
+				if (find_hypotenuse(abs(x_intersection.x_position - start.x_position), abs(x_intersection.y_position - start.y_position))\
 		< find_hypotenuse(abs(y_intersection.x_position - start.x_position), abs(y_intersection.y_position - start.y_position)))
+				{
+					end.x_position = x_intersection.x_position;
+					end.y_position = x_intersection.y_position;
+				}
+				else
+				{
+					end.x_position = y_intersection.x_position;
+					end.y_position = y_intersection.y_position;
+				}
+			}
+			if ((ray_angle >= -180 && ray_angle < 0) || ray_angle >= 180)
 			{
-				end.x_position = x_intersection.x_position;
-				end.y_position = x_intersection.y_position;
+				y_end_map = (end.y_position - 0.0001) / (HEIGHT / count_rows);
+				if ((ray_angle >= -90 && ray_angle <= 0) || (ray_angle >= (180 + 90) && ray_angle >= 0))
+					x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) - 0.1) / WIDTH;
+				else
+					x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) + 0.1) / WIDTH;
 			}
 			else
 			{
-				end.x_position = y_intersection.x_position;
-				end.y_position = y_intersection.y_position;
+				y_end_map =  (end.y_position /*+ 0.0001*/) / (HEIGHT / count_rows);
+				if ((ray_angle < -(90 + 180) && ray_angle <= 0) || (ray_angle <= 90 && ray_angle >= 0))
+					x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) - 0.1) / WIDTH;
+				else
+					x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) /*+ 0.001*/) / WIDTH;
 			}
+			dda(start, end, player);
+			start.x_position = end.x_position;
+			start.y_position = end.y_position;
+			y_map = y_end_map;
+			x_map = x_end_map;
 		}
-		if ((player->current_angle >= -180 && player->current_angle < 0) || player->current_angle >= 180)
-		{
-			y_end_map = (end.y_position - 0.0001) / (HEIGHT / count_rows);
-			if ((player->current_angle >= -90 && player->current_angle <= 0) || (player->current_angle >= (180 + 90) && player->current_angle >= 0))
-				x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) - 0.1) / WIDTH;
-			else
-				x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) + 0.1) / WIDTH;
-		}
-		else
-		{
-			y_end_map =  (end.y_position /*+ 0.0001*/) / (HEIGHT / count_rows);
-			if ((player->current_angle < -(90 + 180) && player->current_angle <= 0) || (player->current_angle <= 90 && player->current_angle >= 0))
-				x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) - 0.1) / WIDTH;
-			else
-				x_end_map = (end.x_position * ((int)ft_strlen(player->map->map[y_end_map]) - 1) /*+ 0.001*/) / WIDTH;
-		}
-		dda(start, end, player);
-		start.x_position = end.x_position;
-		start.y_position = end.y_position;
-		y_map = y_end_map;
-		x_map = x_end_map;
+		ray_angle += 0.8;
 	}
 	return (1);
 }
@@ -344,7 +362,7 @@ void	positive_rotatation(t_player *player)
 	int xrp;
 	int yrp;
 
-	player->current_angle -= 9;
+	player->current_angle -= 0.9;
 	xrp = player->x_player;
 	yrp = player->y_player;
 //	while (--ray_p)
@@ -361,7 +379,7 @@ void	negative_rotatation(t_player *player)
 	int xrp;
 	int yrp;
 
-	player->current_angle += 9;
+	player->current_angle += 0.9;
 	xrp = player->x_player;
 	yrp = player->y_player;
 //	while (--ray_p)
