@@ -61,34 +61,49 @@ void	freeing_double_pointer(char **ptr)
 }
 
 
-//int	main(int argc, const char *argv[])
-//{
-//	char		**map;
-//	char		**elements;
-//	t_map		*map_struct;
-//	t_elements	*elements_struct;
-//	int			fd;
-//
-//	map = NULL;
-//	elements = NULL;
-//	map_struct = NULL;
-//	elements_struct = NULL;
-//	if (argc == 2)
-//	{
-//		fd = open_file(argv[1]);
-//		if (fd < 0)
-//			return (printf(RED"Error\n"RESET), 0);
-//		if (!check_extension(argv[1]))
-//			return (printf(RED"Error\n"RESET), 0);
-//		elements = read_elements(argv[1]);
-//		map = read_map(argv[1]);
-//		if (check_valid_elements(elements, &elements_struct))
-//		{
-//			if (check_valid_map(map))
-//				set_struct_parsing_map(&map_struct, map);
-//		}
-//		else
-//			printf(RED"Error\n"RESET);
+void	set_floor_ceil(t_floor_ciel **floor_ciel, t_elements *elements_struct)
+{
+	while (elements_struct)
+	{
+		if (ft_strcmp(elements_struct->key, "F") || ft_strcmp(elements_struct->key, "C"))
+			add_back_floor_ceil(floor_ciel, add_new_floor_ceil(elements_struct->key, elements_struct->value));
+		elements_struct = elements_struct->next;
+	}
+}
+
+int	main(int argc, const char *argv[])
+{
+	char			**map;
+	char			**elements;
+	t_parsing		parsing;
+	int				fd;
+
+	map = NULL;
+	elements = NULL;
+	parsing.map = NULL;
+	parsing.elements = NULL;
+	parsing.floor_ciel = NULL;
+	if (argc == 2)
+	{
+		fd = open_file(argv[1]);
+		if (fd < 0)
+			return (printf(RED"Error\n"RESET), 0);
+		if (!check_extension(argv[1]))
+			return (printf(RED"Error\n"RESET), 0);
+		elements = read_elements(argv[1]);
+		map = read_map(argv[1]);
+		if (check_valid_elements(elements, &parsing.elements))
+		{
+			if (check_valid_map(map))
+				set_struct_parsing_map(&parsing.map, map);
+		}
+		else
+			printf(RED"Error\n"RESET);
+		removing_new_lines_end(parsing.map->map);
+		set_floor_ceil(&parsing.floor_ciel, parsing.elements);
+//		int i = 0;
+//		while (map[i])
+
 //		int i = 0;
 //		if (elements)
 //		{
@@ -117,12 +132,12 @@ void	freeing_double_pointer(char **ptr)
 //				free(tmp);
 //			}
 //		}
-//		close(fd);
-//	}
-//	else
-//		return (printf(RED"Error\n"RESET), 0);
-//	return (0);
-//}
+		close(fd);
+	}
+	else
+		return (printf(RED"Error\n"RESET), 0);
+	return (0);
+}
 
 
 //int	main(int argc, const char *argv[])
@@ -153,4 +168,25 @@ void	freeing_double_pointer(char **ptr)
 //	else
 //		return (printf(RED"Error\n"RESET), 0);
 //	return (0);
+//}
+
+
+
+//  ------------- testing ----------------
+//while (parsing.elements)
+//{
+//printf("key : %s and value : %s\n", parsing.elements->key, parsing.elements->value);
+//parsing.elements = parsing.elements->next;
+//}
+//while (parsing.floor_ciel)
+//{
+//printf("(%c => %u)\n", parsing.floor_ciel->key, parsing.floor_ciel->value);
+//parsing.floor_ciel = parsing.floor_ciel->next;
+//}
+//if (parsing.map)
+//{
+//int i = 0;
+//while (parsing.map->map[i])
+//printf("%s\n", parsing.map->map[i ++]);
+//printf("Player : %c\n",parsing.map->player);
 //}

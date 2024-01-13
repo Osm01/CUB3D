@@ -69,3 +69,18 @@ int	check_valid_map(char **map)
 	}
 	return (1);
 }
+
+void	removing_new_lines_end(char **map)
+{
+	int i;
+	int	y;
+
+	i = 0;
+	while (map[i])
+	{
+		y = ft_strlen(map[i]);
+		if (map[i][y - 1]  == '\n')
+			map[i][y - 1] = 0;
+		i ++;
+	}
+}
