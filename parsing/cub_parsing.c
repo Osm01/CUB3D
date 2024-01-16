@@ -47,20 +47,6 @@ void	set_struct_parsing_map(t_map **map_struct, char **map)
 	(*map_struct)->map = map;
 }
 
-void	freeing_double_pointer(char **ptr)
-{
-	int	i;
-
-	if (ptr)
-	{
-		i = 0;
-		while (ptr[i])
-			free(ptr[i ++]);
-		free(ptr);
-	}
-}
-
-
 void	set_floor_ceil(t_floor_ciel **floor_ciel, t_elements *elements_struct)
 {
 	while (elements_struct)
@@ -76,6 +62,7 @@ int	main(int argc, const char *argv[])
 	char			**map;
 	char			**elements;
 	t_parsing		parsing;
+	char			**square_map;
 	int				fd;
 
 	map = NULL;
@@ -83,6 +70,7 @@ int	main(int argc, const char *argv[])
 	parsing.map = NULL;
 	parsing.elements = NULL;
 	parsing.floor_ciel = NULL;
+	square_map = NULL;
 	if (argc == 2)
 	{
 		fd = open_file(argv[1]);
@@ -96,43 +84,20 @@ int	main(int argc, const char *argv[])
 		{
 			if (check_valid_map(map))
 				set_struct_parsing_map(&parsing.map, map);
+			else
+				return (printf(RED"Error\n"RESET), /*free_elements(&parsing.elements),*/0);
 		}
 		else
-			printf(RED"Error\n"RESET);
+			return (printf(RED"Error\n"RESET), /*freeing_double_pointer(elements),\
+			freeing_double_pointer(elements),*/ 0);
+		close(fd);
 		removing_new_lines_end(parsing.map->map);
 		set_floor_ceil(&parsing.floor_ciel, parsing.elements);
-//		int i = 0;
-//		while (map[i])
-
-//		int i = 0;
-//		if (elements)
-//		{
-//			while (elements[i])
-//				free(elements[i ++]);
-//			free(elements);
-//		}
-//		i = 0;
-//		if (map)
-//		{
-//			while (map[i])
-//				free(map[i ++]);
-//			free(map);
-//		}
-//		if (map_struct)
-//			free(map_struct);
-//		t_elements *tmp;
-//		if (elements_struct)
-//		{
-//			while (elements_struct)
-//			{
-//				tmp = elements_struct;
-//				elements_struct = elements_struct->next;
-//				free(tmp->key);
-//				free(tmp->value);
-//				free(tmp);
-//			}
-//		}
-		close(fd);
+		square_map = set_square_map(parsing.map->map);
+		int i = 0;
+		while (square_map[i])
+			printf("-%s-\n", square_map[i ++]);
+//		freeing_parsing_struct(&parsing);
 	}
 	else
 		return (printf(RED"Error\n"RESET), 0);
@@ -190,3 +155,49 @@ int	main(int argc, const char *argv[])
 //printf("%s\n", parsing.map->map[i ++]);
 //printf("Player : %c\n",parsing.map->player);
 //}
+
+
+// ------------------------------------------------------ //
+
+//		removing_new_lines_end(parsing.map->map);
+//		set_floor_ceil(&parsing.floor_ciel, parsing.elements);
+//		square_map = set_square_map(parsing.map->map);
+//		int i = 0;
+//		while (parsing.map->map[i])
+//			free(parsing.map->map[i++]);
+//		free(parsing.map->map);
+//		parsing.map->map = square_map;
+//		i = 0;
+//		while (parsing.map->map[i])
+//			printf("-%s-\n", parsing.map->map[i ++]);
+//		int i = 0;
+//		while (map[i])
+
+//		int i = 0;
+//		if (elements)
+//		{
+//			while (elements[i])
+//				free(elements[i ++]);
+//			free(elements);
+//		}
+//		i = 0;
+//		if (map)
+//		{
+//			while (map[i])
+//				free(map[i ++]);
+//			free(map);
+//		}
+//		if (map_struct)
+//			free(map_struct);
+//		t_elements *tmp;
+//		if (elements_struct)
+//		{
+//			while (elements_struct)
+//			{
+//				tmp = elements_struct;
+//				elements_struct = elements_struct->next;
+//				free(tmp->key);
+//				free(tmp->value);
+//				free(tmp);
+//			}
+//		}

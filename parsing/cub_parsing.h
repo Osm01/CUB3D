@@ -74,6 +74,8 @@ char			**read_elements(const char *file_name);
 int				valid_two_elements(char **elem);
 int				set_struct_elements(char **elem, t_elements **t_elem);
 int				check_valid_elements(char **elem, t_elements **t_elem);
+int				check_valid_value_of_walls(t_elements *elem);
+int				check_number_value(char **rgb);
 // ------- STRUCT OF ELEMENTS OPERATION ------- //
 t_floor_ciel	*add_new_floor_ceil(char *key, char *value);
 t_floor_ciel	*last_element_floor_ciel(t_floor_ciel *head);
@@ -86,12 +88,16 @@ char			player_dir(char **map);
 int				index_first_element_of_map(char *line);
 int				count_map(char **map);
 void			removing_new_lines_end(char **map);
+char 			**set_square_map(char **map);
 // ------- MANAGEMENT OF LEAKS ------- //
 t_garbage		*add_new_gar(char *ptr);
 t_garbage		*last_node_gar(t_garbage *garbage);
 void			add_back_gar(t_garbage **head, t_garbage *new);
 void			freeing_double_pointer(char **ptr);
 void			set_struct_parsing_map(t_map **map_struct, char **map);
+void			free_elements(t_elements **elements);
+void			free_floor_ceil(t_floor_ciel **fc);
+void			freeing_parsing_struct(t_parsing *parsing);
 
 int				ft_strcmp(const char *s1, const char *s2);
 

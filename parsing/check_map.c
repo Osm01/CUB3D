@@ -72,8 +72,8 @@ int	check_element_of_map(char **map)
 		y = -1;
 		while (map[i][++y])
 		{
-			if (map[i][y] != ' ' && map[i][y] != '0' && \
-			map[i][y] != '1' && map[i][y] != '\n' && \
+			if (map[i][y] != ' ' && map[i][y] != '0'\
+			&& map[i][y] != '1' && map[i][y] != '\n' && \
 			!(map[i][y] == 'N' || map[i][y] == 'S' \
 			|| map[i][y] == 'E' || map[i][y] == 'W'))
 				return (0);

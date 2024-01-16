@@ -39,7 +39,7 @@ int	check_element_0(char **map, int x_index, int y_index)
 	y > ((int)ft_strlen(map[i + 1]) - check_new_line(map[i + 1]) - 1))
 		return (0);
 	if (map[i][y + 1] == ' ' || map[i][y - 1] == ' ' \
-				|| map[i + 1][y] == ' ' || map[i - 1][y] == ' ')
+	|| map[i + 1][y] == ' ' || map[i - 1][y] == ' ')
 		return (0);
 	return (1);
 }
@@ -64,8 +64,14 @@ int	check_valid_map(char **map)
 		}
 		if (map[i][index_first_element_of_map(map[i])] != '1')
 			return (0);
-		if (map[i][ft_strlen(map[i]) - 2] != '1')
-			return (0);
+		if (map[i][(int)ft_strlen(map[i]) - 1] == '\n')
+		{
+			if (map[i][(int)ft_strlen(map[i]) - 2] != '1')
+				return (0);
+		}
+		else
+			if (map[i][(int)ft_strlen(map[i]) - 1] != '1')
+				return (0);
 	}
 	return (1);
 }

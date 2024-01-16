@@ -72,6 +72,8 @@ void	set_map(char **map, int fd, int count)
 		readline = get_next_line(fd);
 		if (!readline)
 			break ;
+		if (!ft_strcmp(readline, "\n"))
+			y ++;
 		if (y <= 6)
 			free(readline);
 		else
@@ -83,7 +85,6 @@ void	set_map(char **map, int fd, int count)
 			else
 				free(readline);
 		}
-		y ++;
 	}
 	map[count] = NULL;
 }
