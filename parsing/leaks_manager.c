@@ -6,7 +6,7 @@
 /*   By: ouidriss <ouidriss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:26:00 by ouidriss          #+#    #+#             */
-/*   Updated: 2024/01/15 18:26:00 by ouidriss         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:05:20 by ouidriss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,49 @@ void	freeing_double_pointer(char **ptr)
 	}
 }
 
-void	free_elements(t_elements **elements)
+void	free_elements(t_parsing *parsing)
 {
 	t_elements	*tmp;
 
-	if (elements && *elements)
+	if (parsing->elements)
 	{
-		while (*elements)
+		while (parsing->elements)
 		{
-			tmp = (*elements);
-			*elements = (*elements)->next;
-			free(tmp);
+			tmp = parsing->elements->next;
+			free(parsing->elements->value);
+			free(parsing->elements->key);
+			free(parsing->elements);
+			parsing->elements = tmp;
 		}
 	}
 }
 
-void	free_floor_ceil(t_floor_ciel **fc)
+void	free_floor_ceil(t_parsing *parsing)
 {
-	t_floor_ciel *tmp
-	;
-	if (fc && *fc)
+	t_floor_ciel	*tmp;
+
+	if (parsing->floor_ciel)
 	{
-		while (*fc)
+		while (parsing->floor_ciel)
 		{
-			tmp = *fc;
-			*fc = (*fc)->next;
-			free(tmp);
+			tmp = parsing->floor_ciel->next;
+			free(parsing->floor_ciel);
+			parsing->floor_ciel = tmp;
 		}
+	}
+}
+
+void	free_map(t_parsing *parsing)
+{
+	int	i;
+
+	if (parsing->map)
+	{
+		i = 0;
+		while (parsing->map->map[i])
+			free(parsing->map->map[i ++]);
+		free(parsing->map->map);
+		free(parsing->map);
 	}
 }
 
@@ -59,8 +75,8 @@ void	freeing_parsing_struct(t_parsing *parsing)
 {
 	if (parsing)
 	{
-		free_elements(&(parsing)->elements);
-		freeing_double_pointer((parsing)->map->map);
-//		free_floor_ceil(&(parsing)->floor_ciel);
+		free_elements(parsing);
+		free_floor_ceil(parsing);
+		free_map(parsing);
 	}
 }

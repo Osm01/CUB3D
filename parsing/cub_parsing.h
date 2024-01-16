@@ -95,8 +95,8 @@ t_garbage		*last_node_gar(t_garbage *garbage);
 void			add_back_gar(t_garbage **head, t_garbage *new);
 void			freeing_double_pointer(char **ptr);
 void			set_struct_parsing_map(t_map **map_struct, char **map);
-void			free_elements(t_elements **elements);
-void			free_floor_ceil(t_floor_ciel **fc);
+void			free_elements(t_parsing *parsing);
+void			free_floor_ceil(t_parsing *parsing);
 void			freeing_parsing_struct(t_parsing *parsing);
 
 int				ft_strcmp(const char *s1, const char *s2);

@@ -92,22 +92,24 @@ int	check_valid_value(t_elements *elem)
 
 	while (elem)
 	{
+		rgb = NULL;
 		if (ft_strlen(elem->key) == 1)
 		{
 			i = 0;
 			rgb = ft_split(elem->value, ',');
-			while (rgb[i])
-				i ++;
-			if (i == 3)
+			if (rgb)
 			{
-				if (!check_number_value(rgb))
-					return (freeing_double_pointer(rgb), 0);
-				if (!check_valid_value_addictional(rgb, i))
+				while (rgb[i])
+					i ++;
+				if (i == 3)
+				{
+					if (!check_number_value(rgb) || !check_valid_value_addictional(rgb, i))
+						return (freeing_double_pointer(rgb), 0);
+				}
+				else
 					return (freeing_double_pointer(rgb), 0);
 				freeing_double_pointer(rgb);
 			}
-			else
-				return (0);
 		}
 		elem = elem->next;
 	}

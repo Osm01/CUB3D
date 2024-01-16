@@ -75,29 +75,32 @@ int	main(int argc, const char *argv[])
 	{
 		fd = open_file(argv[1]);
 		if (fd < 0)
-			return (printf(RED"Error\n"RESET), 0);
+			return (printf(RED"Error0\n"RESET), 0);
 		if (!check_extension(argv[1]))
-			return (printf(RED"Error\n"RESET), 0);
+			return (printf(RED"Error1\n"RESET), 0);
 		elements = read_elements(argv[1]);
 		map = read_map(argv[1]);
 		if (check_valid_elements(elements, &parsing.elements))
 		{
 			if (check_valid_map(map))
+			{
 				set_struct_parsing_map(&parsing.map, map);
+				removing_new_lines_end(parsing.map->map);
+				set_floor_ceil(&parsing.floor_ciel, parsing.elements);
+				square_map = set_square_map(parsing.map->map);
+				parsing.map->map = square_map;
+			}
 			else
-				return (printf(RED"Error\n"RESET), /*free_elements(&parsing.elements),*/0);
+				printf(RED"Error2\n"RESET);
 		}
 		else
-			return (printf(RED"Error\n"RESET), /*freeing_double_pointer(elements),\
-			freeing_double_pointer(elements),*/ 0);
+			printf(RED"Error3\n"RESET);
 		close(fd);
-		removing_new_lines_end(parsing.map->map);
-		set_floor_ceil(&parsing.floor_ciel, parsing.elements);
-		square_map = set_square_map(parsing.map->map);
-		int i = 0;
-		while (square_map[i])
-			printf("-%s-\n", square_map[i ++]);
-//		freeing_parsing_struct(&parsing);
+		if (elements)
+			freeing_double_pointer(elements);
+		if (map)
+			freeing_double_pointer(map);
+		freeing_parsing_struct(&parsing);
 	}
 	else
 		return (printf(RED"Error\n"RESET), 0);
