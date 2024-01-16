@@ -88,7 +88,7 @@ char			player_dir(char **map);
 int				index_first_element_of_map(char *line);
 int				count_map(char **map);
 void			removing_new_lines_end(char **map);
-char 			**set_square_map(char **map);
+char			**set_square_map(char **map);
 // ------- MANAGEMENT OF LEAKS ------- //
 t_garbage		*add_new_gar(char *ptr);
 t_garbage		*last_node_gar(t_garbage *garbage);

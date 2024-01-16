@@ -12,7 +12,7 @@
 
 #include "cub_parsing.h"
 
-int check_number_value(char **rgb)
+int	check_number_value(char **rgb)
 {
 	int	i;
 	int	y;
@@ -31,10 +31,8 @@ int check_number_value(char **rgb)
 			{
 				nb ++;
 				if (rgb[i][y + 1] < '0' || rgb[i][y + 1] > '9')
-				{
 					if (rgb[i][y + 1] != '\n' && rgb[i][y + 1] != 0)
 						count ++;
-				}
 			}
 		}
 		if (count || nb == 0)
@@ -46,7 +44,7 @@ int check_number_value(char **rgb)
 int	check_valid_value_of_walls(t_elements *elem)
 {
 	int		i;
-	int 	count;
+	int		count;
 
 	while (elem)
 	{

@@ -56,8 +56,6 @@ int	set_key_and_value(char *elem, int y, char **key, char **value)
 	else
 	{
 		y = skip_space_and_tabs(elem, y);
-//		end = found_space_or_tabs(elem, y);
-//		*value = ft_substr(elem, y, (end - y) - 1);
 		*value = ft_substr(elem, y, ft_strlen(elem) - 1);
 		y = ft_strlen(elem) - 1;
 	}

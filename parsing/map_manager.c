@@ -78,9 +78,7 @@ void	set_map(char **map, int fd, int count)
 			free(readline);
 		else
 		{
-			if (!i && !ft_strcmp(readline, "\n"))
-				map[i ++] = readline;
-			else if (i)
+			if (!i && !ft_strcmp(readline, "\n") || i)
 				map[i ++] = readline;
 			else
 				free(readline);

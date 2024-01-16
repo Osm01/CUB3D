@@ -44,6 +44,23 @@ int	check_element_0(char **map, int x_index, int y_index)
 	return (1);
 }
 
+int	check_first_and_last(char **map, int i)
+{
+	if (map[i][index_first_element_of_map(map[i])] != '1')
+		return (0);
+	if (map[i][(int)ft_strlen(map[i]) - 1] == '\n')
+	{
+		if (map[i][(int)ft_strlen(map[i]) - 2] != '1')
+			return (0);
+	}
+	else
+	{
+		if (map[i][(int)ft_strlen(map[i]) - 1] != '1')
+			return (0);
+	}
+	return (1);
+}
+
 int	check_valid_map(char **map)
 {
 	int		i;
@@ -62,30 +79,22 @@ int	check_valid_map(char **map)
 			if (map[i][y] == '0' && !check_element_0(map, i, y))
 				return (0);
 		}
-		if (map[i][index_first_element_of_map(map[i])] != '1')
+		if (!check_first_and_last(map, i))
 			return (0);
-		if (map[i][(int)ft_strlen(map[i]) - 1] == '\n')
-		{
-			if (map[i][(int)ft_strlen(map[i]) - 2] != '1')
-				return (0);
-		}
-		else
-			if (map[i][(int)ft_strlen(map[i]) - 1] != '1')
-				return (0);
 	}
 	return (1);
 }
 
 void	removing_new_lines_end(char **map)
 {
-	int i;
+	int	i;
 	int	y;
 
 	i = 0;
 	while (map[i])
 	{
 		y = ft_strlen(map[i]);
-		if (map[i][y - 1]  == '\n')
+		if (map[i][y - 1] == '\n')
 			map[i][y - 1] = 0;
 		i ++;
 	}

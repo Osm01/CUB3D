@@ -1,6 +1,6 @@
 NAME = parsing
 CXX = cc
-CXXFLAGS = -fsanitize=address #-Wall -Wextra -Werror
+CXXFLAGS = #-fsanitize=address -Wall -Wextra -Werror
 
 CFILES = cub_parsing.c ft_strcmp.c get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c struct_element_operation.c  \

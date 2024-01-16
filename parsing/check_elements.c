@@ -56,7 +56,7 @@ int	check_dup_key(t_elements *head)
 	return (1);
 }
 
-int	check_valid_value_addictional(char **rgb, int i)
+int	check_value_add(char **rgb, int i)
 {
 	int	y;
 	int	len;
@@ -85,14 +85,12 @@ int	check_valid_value_addictional(char **rgb, int i)
 	return (1);
 }
 
-int	check_valid_value(t_elements *elem)
+int	check_valid_value(t_elements *elem, int i)
 {
-	int		i;
 	char	**rgb;
 
 	while (elem)
 	{
-		rgb = NULL;
 		if (ft_strlen(elem->key) == 1)
 		{
 			i = 0;
@@ -103,7 +101,7 @@ int	check_valid_value(t_elements *elem)
 					i ++;
 				if (i == 3)
 				{
-					if (!check_number_value(rgb) || !check_valid_value_addictional(rgb, i))
+					if (!check_number_value(rgb) || !check_value_add(rgb, i))
 						return (freeing_double_pointer(rgb), 0);
 				}
 				else
@@ -116,10 +114,10 @@ int	check_valid_value(t_elements *elem)
 	return (1);
 }
 
-
 int	check_valid_elements(char **elem, t_elements **t_elem)
 {
 	t_elements	*tmp;
+	int			i;
 
 	if (!set_struct_elements(elem, t_elem))
 		return (0);
@@ -139,7 +137,7 @@ int	check_valid_elements(char **elem, t_elements **t_elem)
 	}
 	if (!check_valid_value_of_walls(*t_elem))
 		return (0);
-	if (!check_valid_value(*t_elem))
+	if (!check_valid_value(*t_elem, i))
 		return (0);
 	return (1);
 }
